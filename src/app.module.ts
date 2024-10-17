@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 //
 import { PostsModel } from './posts/entities/posts.entity';
 import { UsersModel } from './users/entities/users.entity';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     PostsModule,
@@ -22,6 +23,7 @@ import { UsersModel } from './users/entities/users.entity';
       entities: [PostsModel, UsersModel],
       synchronize: true, // 개발 환경에서만 그 외 false
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

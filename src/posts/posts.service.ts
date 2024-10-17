@@ -20,7 +20,9 @@ export class PostsService {
   ) {}
 
   async getAllPosts() {
-    return this.postsRepository.find();
+    return this.postsRepository.find({
+      relations: ['author'],
+    });
   }
 
   async getPostById(id: number) {
@@ -28,15 +30,18 @@ export class PostsService {
       where: {
         id: id,
       },
+      relations: ['author'],
     });
 
     if (!post) throw new NotFoundException('찾지 못했습니다.');
     return post;
   }
 
-  async createPost(author: string, title: string, content: string) {
+  async createPost(authorId: number, title: string, content: string) {
     const post = this.postsRepository.create({
-      author,
+      author: {
+        id: authorId,
+      },
       title,
       content,
       likeCount: 0,
@@ -47,12 +52,7 @@ export class PostsService {
     return newPost;
   }
 
-  async updatePost(
-    postId: number,
-    author: string,
-    title: string,
-    content: string,
-  ) {
+  async updatePost(postId: number, title: string, content: string) {
     const post = await this.postsRepository.findOne({
       where: {
         id: postId,
@@ -61,10 +61,6 @@ export class PostsService {
 
     if (!post) {
       throw new NotFoundException('포스트가 없습니다.');
-    }
-
-    if (author) {
-      post.author = author;
     }
 
     if (title) {
