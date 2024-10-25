@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { PostsModel } from './posts/entities/posts.entity';
 import { UsersModel } from './users/entities/users.entity';
 import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
 @Module({
   imports: [
     PostsModule,
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
       synchronize: true, // 개발 환경에서만 그 외 false
     }),
     AuthModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
