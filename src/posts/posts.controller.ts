@@ -23,7 +23,6 @@ export class PostsController {
 
   @Get()
   getPosts(@Query() query: PaginatePostDto) {
-    // return this.postsService.getAllPosts();
     return this.postsService.paginatePosts(query);
   }
 
@@ -49,11 +48,5 @@ export class PostsController {
   @Delete(':id')
   deletePost(@Param('id', ParseIntPipe) id: number) {
     return this.postsService.deletePost(id);
-  }
-
-  @Post('random')
-  @UseGuards(AccessTokenGuard)
-  postTest(@User('id') userId: number) {
-    return this.postsService.generatePosts(userId);
   }
 }
